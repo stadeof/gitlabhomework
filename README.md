@@ -13,19 +13,22 @@ Runners (Создал 2 раннера с executor docker, shell)
 ### DevOps
 
 
-**Dockerfile**
+**Dockerfile** c python3.7
 ```Docker
 FROM centos:7
 
 WORKDIR /python_api
 
-RUN yum install python3 python3-pip -y
+RUN yum install -y make gcc openssl-devel bzip2-devel libffi-devel zlib-devel xz-devel wget curl
+
+RUN wget https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz; tar xzf Python-3.7.11.tgz; cd Python-3.7.11; ./configure --enable-optimizations; make altinstall; rm /python_api/Python-3.7.11.tgz;  
 
 COPY . .
 
-RUN pip3 install -r requirements.txt
+RUN pip3.7 install -r requirements.txt
 
-ENTRYPOINT ["python3", "app.py"]
+ENTRYPOINT ["python3.7", "app.py"]
+
 
 ```
 **.gitlab-ci.yml**
@@ -84,4 +87,4 @@ deploy:
 ![success](./img/task3.png)
 
 
-
+## UPD: Не заметил смену на /rest/api/get_info, исправил в репозитории 
